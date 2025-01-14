@@ -1,0 +1,19 @@
+{% load static %}
+<div class="flex items-center gap-4">
+  <div class="flex items-center gap-1">
+    {% if user in reply.likes.all %}
+    <img class="w-4 pb-1" src="{% static 'images/heart-red.png' %}" alt="like icon" />
+    {% else %}
+    <img class="w-4 pb-1" src="{% static 'images/heart-outline.png' %}" alt="like icon" />
+    {% endif %} {{reply.likes.count}}
+  </div>
+  {% if user.is_authenticated and user != reply.author %}
+
+  <a hx-get="{% url 'like-reply' reply.id %}" hx-target="closest div" hx-swap="outerHTML" class="cursor-pointer hover:underline">
+    {% if user in reply.likes.all %}
+    <b class="text-black">Liked!</b>
+    {% else %} Like {% endif %}
+  </a>
+
+  {% endif %}
+</div>
